@@ -27,9 +27,17 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'puma', group: :development
-gem 'devise'
+
+# Assets
 gem 'font-awesome-rails'
 gem 'gmaps4rails'
+gem 'rest_in_place'
+gem 'bootsy'
+
+# Auth & Roles
+gem 'devise'
+
+# For my sanity
 gem 'quiet_assets'
 gem 'better_errors'
 gem 'binding_of_caller'

@@ -9,12 +9,18 @@
 
 <body data-spy="scroll" data-offset="0" data-target="#theMenu">
 
+<div class="loading">
+  <div class="icon-container">
+    <i class="fa fa-refresh fa-spin"></i>
+  </div>
+</div>
+
 <%= render 'shared/menu' %>
 
 <%= yield %>
 
 <%= yield :maps %>
-<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'application' %>
 
 </body>
 </html>

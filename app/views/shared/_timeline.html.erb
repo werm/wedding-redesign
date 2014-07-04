@@ -17,14 +17,22 @@
       <ul class="timeline">
       <% @stories.each do |story| %>
         <li>
-          <div class="timeline-badge"><i class="icon-{{this.icon}}"></i></div>
+          <div class="timeline-badge"><i class="fa fa-<%= story.icon %>"></i></div>
           <div class="timeline-panel">
             <div class="timeline-heading">
               <h4 class="timeline-title"><%= story.title %></h4>
+              <p>
+                <% if user_signed_in? %>
+                  <%= link_to 'Edit', edit_story_path(story) %>
+                <% end %>
+              </p>
               <p><small class="text-muted"><%= fa_icon "clock-o" %> <%= story.time %></small></p>
             </div>
             <div class="timeline-body">
-              <p><%= story.content.html_safe %></p>
+              <!-- <p class="rest-in-place" data-url="/story/<%= story.id %>" data-formtype="textarea" data-object="story" data-attribute="content"> -->
+              <p>
+                <%= story.content.html_safe %>
+              </p>
             </div>
           </div>
         </li>

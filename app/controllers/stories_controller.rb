@@ -14,7 +14,16 @@ class StoriesController < ApplicationController
 
   # GET /stories/new
   def new
-    @story = Story.new
+    if user_signed_in?
+      if current_user.email == 'craig@wermert.me' || current_user.email == 'nkulick.14@gmail.com'
+        @story = Story.new
+        @email = current_user.email
+      else
+        render template: 'shared/not_logged_in'
+      end
+    else
+      render template: 'shared/not_logged_in'
+    end
   end
 
   # GET /stories/1/edit
@@ -39,6 +48,7 @@ class StoriesController < ApplicationController
 
   # PATCH/PUT /stories/1
   # PATCH/PUT /stories/1.json
+
   def update
     respond_to do |format|
       if @story.update(story_params)

@@ -12,7 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootsy
 //= require turbolinks
 //= require underscore
+//= require notebook
+//= require rest_in_place
 //= require gmaps/google
 //= require_tree .

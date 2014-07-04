@@ -1,15 +1,34 @@
 _.templateSettings = {
   interpolate : /\{\{(.+?)\}\}/g
 };
-// ;(function(){
 
-//   // Menu settings
-//   $('#menuToggle, .menu-close').on('click', function(){
-//     $('#menuToggle').toggleClass('active');
-//     $('body').toggleClass('body-push-toleft');
-//     $('#theMenu').toggleClass('menu-open');
-//   });
+$(function(){
 
+  $('#content').css({
+    'opacity': '0'
+  });
+
+  imagesLoaded('#content', function() {
+    console.log("Images loaded.");
+    $('#content').css({
+      'opacity': '100'
+    });
+    $('.loading').hide();
+  });
+
+  $('.timeline-body p').each(function(){
+    $(this).notebook();
+  });
+
+  // Menu settings
+  $(document).on('click', '#menuToggle, .menu-close', function(){
+    $('#menuToggle').toggleClass('active');
+    $('body').toggleClass('body-push-toleft');
+    $('#theMenu').toggleClass('menu-open');
+  });
+
+  $('.timeline li:odd').addClass('timeline-inverted');
+});
 //   $(document).on('click', '#submitTimeline', function(){
 //     var story = {
 //       icon: $('.icon').val(),
@@ -75,7 +94,10 @@ _.templateSettings = {
 //   });
 
 handler = Gmaps.build('Google');
-handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+handler.buildMap({ provider: {
+  scrollwheel: false
+},
+ internal: {id: 'map'}}, function(){
   markers = handler.addMarkers([
     {
       "lat": 39.951076,
@@ -110,7 +132,6 @@ handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
 
 //   marker.setMap(mapObject);
 
-//   $('.timeline li:odd').addClass('timeline-inverted');
 
 // })(jQuery)
 
