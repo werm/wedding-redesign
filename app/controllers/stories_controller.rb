@@ -5,6 +5,7 @@ class StoriesController < ApplicationController
   # GET /stories.json
   def index
     @stories = Story.all
+    render layout: false
   end
 
   # GET /stories/1
@@ -17,7 +18,7 @@ class StoriesController < ApplicationController
     if user_signed_in?
       if current_user.email == 'craig@wermert.me' || current_user.email == 'nkulick.14@gmail.com'
         @story = Story.new
-        @email = current_user.email
+        render layout: false
       else
         render template: 'shared/not_logged_in'
       end
@@ -28,6 +29,15 @@ class StoriesController < ApplicationController
 
   # GET /stories/1/edit
   def edit
+    if user_signed_in?
+      if current_user.email == 'craig@wermert.me' || current_user.email == 'nkulick.14@gmail.com'
+        render layout: false
+      else
+        render template: 'shared/not_logged_in'
+      end
+    else
+      render template: 'shared/not_logged_in'
+    end
   end
 
   # POST /stories
@@ -37,10 +47,10 @@ class StoriesController < ApplicationController
 
     respond_to do |format|
       if @story.save
-        format.html { redirect_to @story, notice: 'Story was successfully created.' }
+        # format.html { redirect_to @story, notice: 'Story was successfully created.' }
         format.json { render :show, status: :created, location: @story }
       else
-        format.html { render :new }
+        # format.html { render :new }
         format.json { render json: @story.errors, status: :unprocessable_entity }
       end
     end

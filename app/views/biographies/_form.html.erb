@@ -1,0 +1,29 @@
+<%= form_for(@biography) do |f| %>
+  <% if @biography.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@biography.errors.count, "error") %> prohibited this biography from being saved:</h2>
+
+      <ul>
+      <% @biography.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :person, "Who dat? Who dat?" %><br>
+    <%= f.text_field :person, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :title %><br>
+    <%= f.text_field :title, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :content %><br>
+    <%= f.bootsy_area :content, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Submit', :class => 'btn btn-primary' %>
+  </div>
+<% end %>

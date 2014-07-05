@@ -12,8 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootsy
+//= require jquery.turbolinks
 //= require turbolinks
+//= require bootsy
+//= require bootstrap-sprockets
 //= require underscore
 //= require notebook
 //= require rest_in_place

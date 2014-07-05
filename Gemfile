@@ -4,7 +4,8 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.0.rc1'
 # Use mysql as the database for Active Record
-gem 'mysql2'
+# gem 'mysql2'
+gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.1'
 # Use Uglifier as compressor for JavaScript assets
@@ -29,10 +30,14 @@ gem 'spring',        group: :development
 gem 'puma', group: :development
 
 # Assets
+gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
 gem 'font-awesome-rails'
 gem 'gmaps4rails'
 gem 'rest_in_place'
 gem 'bootsy'
+gem 'bourbon'
+gem 'jquery-turbolinks'
 
 # Auth & Roles
 gem 'devise'

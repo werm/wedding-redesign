@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :biographies
+
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   resources :stories
 

@@ -22,7 +22,27 @@
   <% if @story.new_record? %>
     <div class="form-group">
       <%= f.label :icon %><br>
-      <%= f.text_field :icon, class: 'form-control' %>
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-primary">
+          <input type="radio" name="story[icon]" id="icon-smile" value="smile-o"><i class="fa fa-smile-o"></i>
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" name="story[icon]" id="icon-history" value="history"><i class="fa fa-history"></i>
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" name="story[icon]" id="icon-heart" value="heart"><i class="fa fa-heart"></i>
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" name="story[icon]" id="icon-truck" value="truck"><i class="fa fa-truck"></i>
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" name="story[icon]" id="icon-thumbs-up" value="thumbs-o-up"><i class="fa fa-thumbs-o-up"></i>
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" name="story[icon]" id="icon-anchor" value="anchor"><i class="fa fa-anchor"></i>
+        </label>
+      </div>
+      <%#= f.text_field :icon, class: 'form-control' %>
     </div>
   <% end %>
   <div class="form-group">
@@ -30,6 +50,6 @@
     <%= f.bootsy_area :content, class: 'form-control' %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Submit', :id => 'submit_story', :class => 'btn btn-primary' %>
   </div>
 <% end %>

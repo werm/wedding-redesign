@@ -2,23 +2,67 @@ _.templateSettings = {
   interpolate : /\{\{(.+?)\}\}/g
 };
 
-$(function(){
 
-  $('#content').css({
-    'opacity': '0'
-  });
 
-  imagesLoaded('#content', function() {
-    console.log("Images loaded.");
-    $('#content').css({
-      'opacity': '100'
-    });
-    $('.loading').hide();
-  });
+  var modalForm = '[id^=modal_form]';
 
-  $('.timeline-body p').each(function(){
-    $(this).notebook();
-  });
+  App = {
+    loading: function(){
+      $('#content').css({
+        'opacity': '0'
+      });
+
+      imagesLoaded('#content', function() {
+        console.log("Images loaded.");
+        $('#content').css({
+          'opacity': '100'
+        });
+        $('.loading').hide();
+      });
+    },
+
+    modalFormSubmit: function(url, type, el){
+      var data = $( ":input" ).serializeArray();
+      $.ajax({
+        url: url,
+        type: type,
+        dataType: 'JSON',
+        data: data,
+        success: function(data){
+          $(el).modal('hide');
+        }
+      });
+      return false;
+    },
+
+    loadTimeline: function(){
+      $('#timelineContainer').load('/stories', function(){
+        $('.timeline-body p').each(function(){
+          $(this).notebook();
+        });
+        $('.timeline li:odd').addClass('timeline-inverted');
+      });
+    },
+
+    modalLoaded: function(){
+      $(modalForm).each(function(){
+        $(this).on('loaded.bs.modal', function(){
+          Bootsy.init()
+        });
+      });
+    },
+
+    init: function(){
+      App.loading()
+      // App.loadTimeline()
+      Bootsy.init()
+      App.modalLoaded()
+    }
+  } //App
+
+$(window).load(function(){
+  App.init()
+});
 
   // Menu settings
   $(document).on('click', '#menuToggle, .menu-close', function(){
@@ -27,71 +71,25 @@ $(function(){
     $('#theMenu').toggleClass('menu-open');
   });
 
+  $(document).on('submit', '#new_story', function(e){
+    e.preventDefault();
+    App.modalFormSubmit('/stories', 'POST', '#new_story');
+  });
+
+  $(document).on('submit', '[id^=edit_story]', function(e){
+    e.preventDefault();
+    var id = $('form[id^=edit_story]').attr('id');
+    var storyId = id.split('_')[2];
+    App.modalFormSubmit('/stories/' + storyId, 'PUT', modalForm);
+    $('#timelineContainer').empty();
+    App.loadTimeline()
+  });
+
+  $('.timeline-body p').each(function(){
+    $(this).notebook();
+  });
   $('.timeline li:odd').addClass('timeline-inverted');
-});
-//   $(document).on('click', '#submitTimeline', function(){
-//     var story = {
-//       icon: $('.icon').val(),
-//       title: $('.title').val(),
-//       time: $('.time').val(),
-//       content: $('.content').val()
-//     }
-//     $.ajax({
-//       url: '/timeline/create',
-//       type: 'POST',
-//       data: story,
-//       dataType: 'JSON',
-//       success: function(data){
-//         console.log("success");
-//         $('.story-form input').each(function(){
-//           $(this).val('');
-//         });
-//       },
-//       error: function(jqXHR, status, thrownError) {
-//         var responseText = jQuery.parseJSON(jqXHR.responseText);
-//         console.log(responseText);
-//       }
-//     });
-//   });
 
-//   $(document).on('click', '#submitUser', function(){
-//     var user = {
-//       username: $('.username').val(),
-//       email: $('.email').val(),
-//       password: $('.password').val()
-//     }
-//     $.ajax({
-//       url: '/user/create',
-//       type: 'POST',
-//       data: user,
-//       dataType: 'JSON',
-//       success: function(data){
-//         console.log("success");
-//         $('.user-form input').each(function(){
-//           $(this).val('');
-//         });
-//       },
-//       error: function(jqXHR, status, thrownError) {
-//         var responseText = jQuery.parseJSON(jqXHR.responseText);
-//         console.log(responseText);
-//       }
-//     });
-//   });
-
-//   $(document).on('click', '.deleteStory', function(){
-//     var storyId = $(this).data('story-id');
-//     $.ajax({
-//       url: '/timeline/delete/' + storyId,
-//       type: 'DELETE',
-//       success: function(){
-//         console.log("Deleted");
-//       },
-//       error: function(jqXHR, status, thrownError) {
-//         var responseText = jQuery.parseJSON(jqXHR.responseText);
-//         console.log(responseText);
-//       }
-//     });
-//   });
 
 handler = Gmaps.build('Google');
 handler.buildMap({ provider: {
@@ -116,41 +114,3 @@ handler.buildMap({ provider: {
   handler.getMap().setZoom(13);
 });
 
-//   var mapOptions = {
-//     zoom: 10,
-//     center: new google.maps.LatLng(39.951076, -83.001306),
-//     mapTypeId: google.maps.MapTypeId.ROADMAP
-//   };
-//   // Draw the map
-//   var mapObject = new google.maps.Map(document.getElementById("map"), mapOptions);
-  
-//   var marker = new google.maps.Marker({
-//     position: new google.maps.LatLng(39.951076, -83.001306),
-//     map: mapObject,
-//     title:"Hello World!"
-//   });
-
-//   marker.setMap(mapObject);
-
-
-// })(jQuery)
-
-// $(window).load(function(){
-
-//   var calendarTemplate = _.template( $('#template-calendar').html() );
-
-//   $('#calendar').clndr({
-//     render: function(data) {
-//       return calendarTemplate(data);
-//     },
-//     startWithMonth: "2015-05-01",
-//     events: [
-//         { date: '2015-05-09', title: 'WEDDING!' }
-//       ],
-//   });
-
-//   $.stellar({
-//     horizontalScrolling: false,
-//     verticalOffset: 40
-//   });
-// });
