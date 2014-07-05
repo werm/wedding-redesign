@@ -37,6 +37,7 @@ test:
 #
 production:
   <<: *default
+  socket: /var/run/mysqld/mysqld.sock
   database: wedding-redesign_production
   # url: <%= ENV["DATABASE_URL"] %>
 
