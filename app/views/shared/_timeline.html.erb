@@ -11,9 +11,11 @@
 
     <div class="row">
       <div class="col-sm-12">
+      <% if user_signed_in? %>
         <a href="/stories/new" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#new_story" >
           New
         </a>
+      <% end %>
       </div>
     </div>
     <div class="container-fluid timeline-container">
