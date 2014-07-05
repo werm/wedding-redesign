@@ -79,36 +79,6 @@ $(window).load(function(){
     App.modalFormSubmit('/stories', 'POST', '#new_story');
   });
 
-  $(document).on('submit', '[id^=edit_story]', function(e){
-    e.preventDefault();
-    var id = $('form[id^=edit_story]').attr('id');
-    var storyId = id.split('_')[2];
-    App.modalFormSubmit('/stories/' + storyId, 'PUT', modalForm);
-    var title = $('#story_title').val();
-    var icon = $('input:radio[name=story_icon]').filter(":checked").val();
-    var time = $('#story_time').val();
-    var content = $('#story_content').val();
-    <li><div class="timeline-badge"><i class="fa fa-<%= story.icon %>"></i></div>
-      <div class="timeline-panel">
-        <div class="timeline-heading">
-          <h4 class="timeline-title"><%= story.title %></h4>
-          <p>
-            <% if user_signed_in? %>
-              <%= link_to 'Edit', edit_story_path(story), class: 'btn btn-primary btn-xs', :data => {:toggle => 'modal', :target => "#modal_form_edit_story-#{story.id}"} %><%= link_to 'Destroy', story, method: :delete, data: { confirm: 'Are you sure?' } %>
-            <% end %>
-          </p>
-          <p><small class="text-muted"><%= fa_icon "clock-o" %> <%= story.time %></small></p>
-        </div>
-        <div class="timeline-body">
-          <!-- <p class="rest-in-place" data-url="/story/<%= story.id %>" data-formtype="textarea" data-object="story" data-attribute="content"> -->
-          <p>
-            <%= story.content.html_safe %>
-          </p>
-        </div>
-      </div>
-    </li>
-  });
-
   $('.timeline-body p').each(function(){
     $(this).notebook();
   });
