@@ -2,8 +2,7 @@
    Base Styles, Bootstrap Modifications & Fonts Import
    ========================================================================== */
 
-@import url(http://fonts.googleapis.com/css?family=Oswald:400,300,700);
-@import url(http://fonts.googleapis.com/css?family=Lato:400,700);
+@import 'fonts';
 
 html,
 button,
@@ -48,6 +47,8 @@ textarea {
   text-align: center
 }
 
+.bold { font-weight: 700; }
+.light { font-weight: 100; }
 
 /* ==========================================================================
    General styles
@@ -394,7 +395,9 @@ textarea { min-height:400px; }
     color: inherit;
 }
 
-.timeline-body > p,
+.timeline-body > p {
+  margin-bottom: 10px;
+}
 .timeline-body > ul {
     margin-bottom: 0;
 }
@@ -442,10 +445,10 @@ textarea { min-height:400px; }
 /* ==========================================================================
    Map
    ========================================================================== */
-#map {
-  height: 400px;
-  min-height: 400px;
-}
+// #map {
+//   height: 400px;
+//   min-height: 400px;
+// }
 
 /* ==========================================================================
    Wrap Sections
@@ -493,7 +496,6 @@ textarea { min-height:400px; }
 }
 .name p {
   font-size: 22px;
-  font-weight: lighter;
   margin-top: 15px;
   letter-spacing: 2px;
 }
@@ -540,10 +542,18 @@ textarea { min-height:400px; }
 .details {
   background-image: url(/assets/kiss_on_cheek.jpg);
 }
+
 /* Details Wrap */
-.venue h3 {
-  font-size: 2em;
+.date p {
+  line-height: 1;
+  margin-top: 0;
+  text-align: center;
+  text-transform: uppercase;
 }
+
+// .icon-ohio {
+//   color: #666;
+// }
 
 .venue .address {
   font-size: 1.2em;

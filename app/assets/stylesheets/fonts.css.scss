@@ -1,0 +1,51 @@
+@import url(http://fonts.googleapis.com/css?family=Oswald:100,400,300,700);
+@import url(http://fonts.googleapis.com/css?family=Lato:100,400,700);
+
+@font-face {
+  font-family: 'icomoon';
+  src:url('icomoon.eot?-pwtb2i');
+  src:url('icomoon.eot?#iefix-pwtb2i') format('embedded-opentype'),
+    url('icomoon.woff?-pwtb2i') format('woff'),
+    url('icomoon.ttf?-pwtb2i') format('truetype'),
+    url('icomoon.svg?-pwtb2i#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-ohio:before {
+  content: "\69";
+}
+.icon-star:before {
+  content: "\e606";
+}
+.icon-heart:before {
+  content: "\e600";
+}
+.icon-diamond:before {
+  content: "\e601";
+}
+.icon-mail:before {
+  content: "\e602";
+}
+.icon-clock:before {
+  content: "\e605";
+}
+.icon-study:before {
+  content: "\e603";
+}
+.icon-truck:before {
+  content: "\e604";
+}

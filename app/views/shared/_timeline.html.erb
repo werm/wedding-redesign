@@ -25,13 +25,14 @@
       <ul class="timeline">
       <% @stories.each do |story| %>
         <li>
-          <div class="timeline-badge"><i class="fa fa-<%= story.icon %>"></i></div>
+          <div class="timeline-badge"><i class="icon icon-<%= story.icon %>"></i></div>
           <div class="timeline-panel">
             <div class="timeline-heading">
               <h4 class="timeline-title"><%= story.title %></h4>
               <p>
                 <% if user_signed_in? %>
-                  <%= link_to 'Edit', edit_story_path(story), class: 'btn btn-primary btn-xs', :data => {:toggle => 'modal', :target => "#modal_form_edit_story-#{story.id}"} %><%= link_to 'Destroy', story, method: :delete, data: { confirm: 'Are you sure?' } %>
+                  <%= link_to 'Edit', edit_story_path(story), class: 'btn btn-primary btn-xs', :data => {:toggle => 'modal', :target => "#modal_form_edit_story-#{story.id}"} %>
+                  <%= link_to 'Delete', story, method: :delete, class: 'btn btn-danger btn-xs', data: { confirm: 'Are you sure?' } %>
                 <% end %>
               </p>
               <p><small class="text-muted"><%= fa_icon "clock-o" %> <%= story.time %></small></p>
