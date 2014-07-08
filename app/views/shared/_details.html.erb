@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8-offset-2 centered">
-        <h1>AN OVERVIEW OF THE FESTIVITIES</h1>
+        <h1 class="sectionHead">AN OVERVIEW OF THE FESTIVITIES</h1>
         <h3 class="text-muted">When, where, etc.</h3>
       </div><!-- /col-lg-8 -->
     </div><!--/row -->
@@ -40,28 +40,33 @@
       </div>
     </div>
 
-    <div id="calendar"></div>
+  <hr>
 
-    <script type="text/template" id="template-calendar">
-      <div class="clndr-controls">
-        <div class="clndr-previous-button">&lsaquo;</div>
-        <div class="month">{{= month }}</div>
-        <div class="clndr-next-button">&rsaquo;</div>
-      </div>
-      <div class="clndr-grid">
-        <div class="days-of-the-week clearfix">
-          {{ _.each(daysOfTheWeek, function(day) { }}
-            <div class="header-day">{{= day }}</div>
-          {{ }); }}
-          <div class="days clearfix">
-            {{ _.each(days, function(day) { }}
-              <div class="{{= day.classes }}">{{= day.day }}</div>
-            {{ }); }}
-          </div>
-        </div>
-      </div>
-      <div class="clndr-today-button">Today</div>
-    </script>
-
+  <div class="row">
+    <div class="col-sm-12">
+      <h1 class="centered secondary">HOTEL ACCOMODATIONS</h1>
+    </div>
   </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <p class="lead">
+        We're working on setting up a group discount, but if you're just too excited and want to book a room now, 
+          <a href="https://www.google.com/search?q=hotels%20brewery%20district%20columbus%20ohio&rct=j">here's a good start</a>!
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h1 class="centered secondary">ATTIRE</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <p class="lead">
+        The only thing that we really want (outside of a marriage filled with everlasting puppy love and rainbows and stuff), is for you to be comfortable. This isn't a black tie event, but if that's what you want to wear, go for it! It'd be nice if you left the jeans at home, though.
+      </p>
+    </div>
+  </div>
+</div>
 </div>

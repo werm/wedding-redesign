@@ -4,7 +4,7 @@ class BiographiesController < ApplicationController
   # GET /biographies
   # GET /biographies.json
   def index
-    @biographies = Biography.all
+    @bio = Biography.all
   end
 
   # GET /biographies/1
@@ -61,10 +61,10 @@ class BiographiesController < ApplicationController
   def update
     respond_to do |format|
       if @biography.update(biography_params)
-        format.html { redirect_to @biography, notice: 'Biography was successfully updated.' }
-        format.json { render :show, status: :ok, location: @biography }
+        # format.html { redirect_to '/', notice: 'Biography was successfully updated.' }
+        format.json { render json: { status: :ok, bio: biography_params }}
       else
-        format.html { render :edit }
+        # format.html { render :edit }
         format.json { render json: @biography.errors, status: :unprocessable_entity }
       end
     end

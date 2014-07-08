@@ -28,7 +28,7 @@
           <div class="timeline-badge"><i class="icon icon-<%= story.icon %>"></i></div>
           <div class="timeline-panel">
             <div class="timeline-heading">
-              <h4 class="timeline-title"><%= story.title %></h4>
+              <h3 class="timeline-title"><%= story.title %></h3>
               <p>
                 <% if user_signed_in? %>
                   <%= link_to 'Edit', edit_story_path(story), class: 'btn btn-primary btn-xs', :data => {:toggle => 'modal', :target => "#modal_form_edit_story-#{story.id}"} %>

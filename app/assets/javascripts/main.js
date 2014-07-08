@@ -1,8 +1,13 @@
 _.templateSettings = {
-  interpolate : /\{\{(.+?)\}\}/g
+    evaluate:    /\{\{(.+?)\}\}/g,
+    interpolate: /\{\{=(.+?)\}\}/g,
+    escape:      /\{\{-(.+?)\}\}/g
 };
 
-  var modalForm = '[id^=modal_form]';
+  var modalForm = '.modal';
+  var biosLoaded;
+
+  var loadingDiv = '<div class="loading"><div class="icon-container"><i class="fa fa-refresh fa-spin"></i></div></div>'
 
   App = {
     loading: function(){
@@ -21,7 +26,7 @@ _.templateSettings = {
       }
     },
 
-    modalFormSubmit: function(url, type, el){
+    modalFormSubmit: function(url, type){
       var data = $( ":input" ).serializeArray();
       $.ajax({
         url: url,
@@ -29,20 +34,50 @@ _.templateSettings = {
         dataType: 'JSON',
         data: data,
         success: function(data){
-          $(el).modal('hide');
+          if(data.status === 'ok'){
+            console.log(data)
+            $('.modal.in').modal('hide');
+          }
         }
+      })
+      .done(function(data){
+        $('.modal-backdrop').remove()
       });
-      return false;
+    },
+
+    loadBios: function(){
+      $.get('/biographies.json', function(bios){
+        var template = $('#bioTemplate').html();
+        $('#remoteBio').html(_.template(template, { bios: bios }));
+        Bootsy.init()
+        $('.pop').each(function(){
+          $(this).popover({ 
+            html: true,
+            trigger: 'hover'
+          });
+        });
+      });
     },
 
     loadTimeline: function(){
-      $('#timelineContainer').load('/stories', function(){
-        $('.timeline li:odd').addClass('timeline-inverted');
-        $(modalForm).on('loaded.bs.modal', function(){
+      if($('.timeline-badge').length < 0){
+        $('#timelineRemote').empty()
+      }
+      $.get('/stories.json', function(stories){
+        var template = $('#timelineTemplate').html();
+        $('#timelineRemote').html(_.template(template, { stories: stories }));
+      })
+        .done(function(){
+          $('.timeline li:odd').addClass('timeline-inverted');
+          App.modalLoaded()
           Bootsy.init()
         });
-        Bootsy.init()
-      });
+    },
+
+    loadDetails: function(){
+      if($('#details').isOnScreen() && mapsLoaded !== true){
+        Map.load()
+      }
     },
 
     modalLoaded: function(){
@@ -64,12 +99,33 @@ _.templateSettings = {
       }
     },
 
+    getFancy: function(){
+      $('body').append('<div class="toast">' +
+          '<div class="toasty"><img src="http://i.imgur.com/0Z7WPpe.gif" class="img-responsive"><br>' +
+          '<button id="noFancy" class="btn btn-primary btn-lg center-block hide">Go away!</button></div></div>');
+      $('#fancy, #noFancy').toggleClass('hide');
+    },
+
+    konami: function(){
+      var konamiCodeArray = [],
+          konamiCodeKey = '38,38,40,40,37,39,37,39,66,65';
+      $(document).keydown(function(e) {
+          konamiCodeArray.push(e.keyCode);
+          if (konamiCodeArray.toString().indexOf(konamiCodeKey) >= 0) {
+            App.getFancy()
+            konamiCodeArray = [];
+          }
+      });
+    },
+
     init: function(){
-      App.loading()
+      // App.loading()
+      App.loadBios()
       App.loadTimeline()
       Bootsy.init()
       App.modalLoaded()
       App.svgFallback()
+      App.konami()
       $('.embiggen').bigtext();
     }
   } //App
@@ -80,46 +136,55 @@ $(window).load(function(){
     'opacity': '100'
   });
   $('.loading').hide();
+  App.loadDetails();
 });
 
-  // Menu settings
-  $(document).on('click', '#menuToggle, .menu-close', function(){
-    $('#menuToggle').toggleClass('active');
-    $('body').toggleClass('body-push-toleft');
-    $('#theMenu').toggleClass('menu-open');
+$(window).on('scroll', function(){
+  App.loadDetails();
+});
+
+var oldSrc;
+
+$(function() {
+  $("img").mouseover(function(){
+    oldSrc = $(this).attr('src');
+    $(this).attr("src", $(this).data('newImg'));
+  })
+  .mouseout(function() {
+     $(this).attr("src", oldSrc);
   });
+});
 
-  $(document).on('submit', '#new_story', function(e){
-    e.preventDefault();
-    App.modalFormSubmit('/stories', 'POST', '#new_story');
-  });
+$(document).on('click', '#noFancy', function(e){
+  e.preventDefault()
+  $('.toast').remove();
+  $('#fancy, #noFancy').toggleClass('hide');
+});
 
-  // $('.timeline-body p').each(function(){
-  //   $(this).notebook();
-  // });
-  $('.timeline li:odd').addClass('timeline-inverted');
-    
+// Menu settings
+$(document).on('click', '#menuToggle, .menu-close', function(){
+  $('#menuToggle').toggleClass('active');
+  $('body').toggleClass('body-push-toleft');
+  $('#theMenu').toggleClass('menu-open');
+});
 
-// handler = Gmaps.build('Google');
-// handler.buildMap({ provider: {
-//   scrollwheel: false
-// },
-//  internal: {id: 'map'}}, function(){
-//   markers = handler.addMarkers([
-//     {
-//       "lat": 39.951076,
-//       "lng":  -83.001306,
-//       "picture": {
-//         "url": "/assets/map_marker.png",
-//         "width":  24,
-//         "height": 21
-//       },
-//       "infowindow": "hello!"
-//     }
-//   ]);
-//   handler.bounds.extendWith(markers);
-//   // handler.map.centerOnMarker();
-//   handler.fitMapToBounds();
-//   handler.getMap().setZoom(13);
-// });
+$(document).on('submit', '#new_story', function(e){
+  e.preventDefault();
+  App.modalFormSubmit('/stories', 'POST');
+});
 
+$(document).on('submit', '[id^="edit_story"]', function(e){
+  e.preventDefault();
+  id = $(this).attr('id').split('_')[2]
+  App.modalFormSubmit('/stories/' + id, 'PUT');
+  App.loadTimeline();
+});
+
+$(document).on('submit', '[id^="edit_biography"]', function(e){
+  e.preventDefault();
+  id = $(this).attr('id').split('_')[2]
+  App.modalFormSubmit('/biographies/' + id, 'PUT');
+  App.loadBios()
+});
+
+$('.timeline li:odd').addClass('timeline-inverted');

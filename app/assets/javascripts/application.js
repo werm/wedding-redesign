@@ -14,15 +14,16 @@
 //= require jquery_ujs
 //= require jquery.turbolinks
 //= require turbolinks
+//= require visible
 //= require underscore
 //= require images_loaded
 //= require smoothscroll
 //= require jquery.stellar.min
 //= require classie
 //= require bootsy
-//= require bootstrap-sprockets
 //= require underscore
 //= require fittext
 //= require maps
 //= require sessions
+//= require bootstrap-sprockets
 //= require main

@@ -3,22 +3,16 @@
 <head>
   <title>Craig &amp; Nicole</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'deb' %>
   <%= javascript_include_tag 'modernizr' %>
   <%= csrf_meta_tags %>
 </head>
 
-
 <body data-spy="scroll" data-offset="0" data-target="#theMenu">
 
-<div class="loading">
-  <div class="icon-container">
-    <i class="fa fa-refresh fa-spin"></i>
-  </div>
-</div>
-
-<%= render 'shared/menu' %>
-
 <%= yield %>
+
+<%= render 'shared/navbar' %>
 
 <%= yield :maps %>
 <%= javascript_include_tag 'application' %>
