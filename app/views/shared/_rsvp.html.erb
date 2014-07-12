@@ -1,0 +1,40 @@
+<section id="rsvp" name="rsvp"></section>
+  <div id="rsvpwrap">
+    <div class="container">
+
+    <iframe name="hidden_iframe" id="hidden_iframe"
+    style="display:none;"></iframe>
+    
+    <form class="rsvpForm" action="https://docs.google.com/a/wermert.me/forms/d/1lJ3HjBe7dCDkFR5lFAbQ_jWstyIueO-uTQONqeciaV8/formResponse" method="post"
+    target="hidden_iframe" onsubmit="submitted=true;">
+
+      <div class="form-group">
+        <label class="sr-only" for="entry_309092264">Name</label>
+        <input class="form-control" dir="auto" id="entry_309092264" name="entry.309092264" required="" placeholder="Name" type="text" value="">
+      </div>
+
+      <div class="form-group">
+        Attending?
+        <div class="radio">
+          <label for="attending">
+            <input id="attending" name="entry.1478013449" required="" type="radio" value="yes">
+            Wouldn't miss it!
+          </label>
+        </div>
+
+        <div class="radio">
+          <label for="not_attending">
+            <input id="not_attending" name="entry.1478013449" required="" type="radio" value="no">
+            Will be there in spirit!
+          </label>
+        </div>
+        
+      </div>
+      
+      <div class="form-group">
+        <button class="btn btn-primary" id="submitRsvp" type="submit">Submit</button>
+      </div>
+    </form>
+
+    </div>
+  </div>

@@ -16,6 +16,7 @@ html, body {
   height: 100%;
 }
 
+body { padding-bottom: 70px; }
 /*
  * Remove text-shadow in selection highlight: h5bp.com/i
  * These selection rule sets have to be separate.
@@ -787,3 +788,8 @@ textarea { min-height:400px; }
 }
 
 .pop { cursor: pointer; }
+
+#rsvpwrap {
+  margin-top: 80px;
+  margin-bottom: 80px;
+}

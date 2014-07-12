@@ -168,6 +168,16 @@ $(document).on('click', '#menuToggle, .menu-close', function(){
   $('#theMenu').toggleClass('menu-open');
 });
 
+var submitted = false;
+
+$('#hidden_iframe').load(function(){
+  if(submitted){
+    $('.rsvpForm').hide();
+    $('#rsvpwrap').append('<h1>Thanks!</h1>');
+    // window.location='http://localhost:3000';
+  }
+});
+
 $(document).on('submit', '#new_story', function(e){
   e.preventDefault();
   App.modalFormSubmit('/stories', 'POST');
