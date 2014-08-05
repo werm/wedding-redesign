@@ -579,6 +579,10 @@ textarea { min-height:400px; }
   background-image: url(/assets/kiss_on_cheek.jpg);
 }
 
+.party {
+  background-image: url(/assets/party-sep.jpg);
+}
+
 /* Details Wrap */
 
 #detailwrap, #partywrap {
@@ -702,14 +706,9 @@ textarea { min-height:400px; }
 
 /* Contact Wrap */
 #contactwrap {
-  background-color: #2f2f2f;
   margin-top: 0px;
   padding-top: 25px;
   padding-bottom: 25px;
-}
-
-#contactwrap p {
-  color: #f2f2f2;
 }
 
 #contactwrap small {
@@ -719,12 +718,6 @@ textarea { min-height:400px; }
 .contact {
   background-image: url(/assets/contact-sep.jpg);
 }
-
-#contactwrap label {
-  color: #f2f2f2;
-  margin-top: 10px;
-}
-
 
 /* Gallery Configuration */
 .photo-wrapper {

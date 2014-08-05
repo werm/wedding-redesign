@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.0.rc1'
+gem 'rails', '4.1.0'
 # Use mysql as the database for Active Record
 gem 'mysql2'
 # gem 'sqlite3'
@@ -47,4 +47,10 @@ gem 'devise'
 gem 'quiet_assets'
 gem 'better_errors'
 gem 'binding_of_caller'
+gem 'contact_us'
+gem 'figaro', '~> 0.7.0'
 
+# For styleguide
+gem 'compass'
+gem 'compass-normalize'
+gem 'sass-globbing'

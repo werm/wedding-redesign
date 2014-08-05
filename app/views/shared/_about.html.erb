@@ -11,7 +11,7 @@
 <script type="text/template" id="bioTemplate">
   {{ _.each(bios, function(bio, key, list){ }}
     <div class="row">
-      <div class="col-lg-4 name">
+      <div class="col-sm-4 name">
         {{ if(bio.person === 'Nicole Kulick'){ }}
           <img src="assets/nicole.jpg" class="img-responsive" >
         {{ } else { }}
@@ -20,7 +20,7 @@
         <p>{{= bio.person }}</p>
         <div class="name-label"></div>
       </div>
-      <div class="col-lg-8 name-desc">
+      <div class="col-sm-8 name-desc">
         <h2>{{= bio.title }}</h2>
         <div class="row">
           <div class="col-sm-6">
