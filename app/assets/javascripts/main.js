@@ -166,14 +166,9 @@ _.templateSettings = {
 
 Submit = {
   contact: function(){
-    // var contactData = {
-    //   "contact[name]": $('#contact_name').val(),
-    //   "contact[email]": $('#contact_email').val(),
-    //   "contact[message]": $('#contact_message').val()
-    // }
     var contactData = $('#new_contact').serializeArray();
     $.ajax({
-      url: '/contacts',
+      url: '/contacts' + "?&authenticity_token=" + AUTH_TOKEN,
       type: 'POST',
       dataType: 'json',
       data: contactData,
