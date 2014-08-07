@@ -47,7 +47,8 @@ gem 'devise'
 gem 'quiet_assets'
 gem 'better_errors'
 gem 'binding_of_caller'
-gem 'contact_us'
+gem 'mail_form'
+gem 'simple_form'
 gem 'figaro', '~> 0.7.0'
 
 # For styleguide

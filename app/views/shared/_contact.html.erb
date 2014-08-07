@@ -1,0 +1,41 @@
+<!-- DETAILS SECTION -->
+<section id="contact" name="contact"></section>
+<div id="contactwrap">
+  <div class="container">
+    <div class="row">
+
+  <form accept-charset="UTF-8" action="/contacts" class="simple_form form-horizontal" id="new_contact" method="post">
+    <fieldset>
+      <legend><h2>Contact Us</h2></legend>
+      <div class="input string required contact_name form-group">
+        <label class="string required col-sm-2 control-label" for="contact_name"><abbr title="required">*</abbr> Name</label>
+        <div class="col-sm-10">
+          <input aria-required="true" class="string required col-sm-10 form-control" id="contact_name" name="contact[name]" required="required" type="text">
+        </div>
+        </div>
+      <div class="input email required contact_email form-group">
+        <label class="email required col-sm-2 control-label" for="contact_email"><abbr title="required">*</abbr> Email</label>
+        <div class="col-sm-10">
+          <input aria-required="true" class="string email required form-control" id="contact_email" name="contact[email]" required="required" type="email">
+        </div>
+      </div>
+      <div class="input text optional contact_message form-group">
+        <label class="text optional col-sm-2 control-label" for="contact_message">Message</label>
+        <div class="col-sm-10">
+          <textarea class="text optional col-sm-10 form-control" id="contact_message" name="contact[message]" rows="10"></textarea>
+        </div>
+      </div>
+    <div class="hide">
+        <label class="string optional" for="contact_nickname">Nickname</label>
+        <input class="string optional" id="contact_nickname" name="contact[nickname]" type="text"><span class="hint">Leave this field blank!</span>
+    </div>
+    <div class="form-actions form-group">
+      <div class="col-sm-10 col-sm-offset-2">
+        <input class="button btn btn-primary" name="commit" type="submit" value="Send message">
+      </div>
+    </div>
+    </fieldset>
+  </form>
+  <div class="successMessage"></div>
+  </div>
+</div>
