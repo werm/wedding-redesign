@@ -195,8 +195,8 @@ $(window).load(function(){
   $('#content').css({
     'opacity': '100'
   });
-  $('.loading').hide();
   App.loadDetails();
+  $('.loading').hide();
 });
 
 $(window).on('scroll', function(){
