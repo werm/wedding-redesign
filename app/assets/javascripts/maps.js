@@ -4,253 +4,65 @@ var mapsLoaded;
 Map = {
   load: function(){
     mapsLoaded = true;
-    var directionsDisplay;
-    var directionsService = new google.maps.DirectionsService();
+
+    L.Map = L.Map.extend({
+      openPopup: function(popup) {
+          //        this.closePopup();  // just comment this
+          this._popup = popup;
+
+          return this.addLayer(popup).fire('popupopen', {
+              popup: this._popup
+          });
+      }
+    });
 
     //set your google maps parameters
     var latitude = 39.951076,
-      longitude = -83.001306,
-      map_zoom = 14;
+        longitude = -83.001306,
+        hi_lat = 39.958724,
+        hi_lon = -82.994785,
+        cy_lat = 39.966107,
+        cy_lon = -83.002952;
 
-    //google map custom marker icon - .png fallback for IE11
-    var is_internetExplorer11= navigator.userAgent.toLowerCase().indexOf('trident') > -1;
-    var marker_url = ( is_internetExplorer11 ) ? 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/447/cd-icon-location.png' : 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/447/cd-icon-location.svg';
-      
-    //define the basic color of your map, plus a value for saturation and brightness
-    var main_color = '#2d313f',
-      saturation_value= -20,
-      brightness_value= 5;
+    var venueMap = L.map('venueMap').setView([latitude, longitude], 14);
 
-    //we define here the style of the map
-    var style= [ 
-      {
-        //set saturation for the labels on the map
-        elementType: "labels",
-        stylers: [
-          {saturation: saturation_value}
-        ]
-      },  
-        { //poi stands for point of interest - don't show these lables on the map 
-        featureType: "poi",
-        elementType: "labels",
-        stylers: [
-          {visibility: "off"}
-        ]
-      },
-      {
-        //don't show highways lables on the map
-            featureType: 'road.highway',
-            elementType: 'labels',
-            stylers: [
-                {visibility: "off"}
-            ]
-        }, 
-      {   
-        //don't show local road lables on the map
-        featureType: "road.local", 
-        elementType: "labels.icon", 
-        stylers: [
-          {visibility: "off"} 
-        ] 
-      },
-      { 
-        //don't show arterial road lables on the map
-        featureType: "road.arterial", 
-        elementType: "labels.icon", 
-        stylers: [
-          {visibility: "off"}
-        ] 
-      },
-      {
-        //don't show road lables on the map
-        featureType: "road",
-        elementType: "geometry.stroke",
-        stylers: [
-          {visibility: "off"}
-        ]
-      }, 
-      //style different elements on the map
-      { 
-        featureType: "transit", 
-        elementType: "geometry.fill", 
-        stylers: [
-          { hue: main_color },
-          { visibility: "on" }, 
-          { lightness: brightness_value }, 
-          { saturation: saturation_value }
-        ]
-      }, 
-      {
-        featureType: "poi",
-        elementType: "geometry.fill",
-        stylers: [
-          { hue: main_color },
-          { visibility: "on" }, 
-          { lightness: brightness_value }, 
-          { saturation: saturation_value }
-        ]
-      },
-      {
-        featureType: "poi.government",
-        elementType: "geometry.fill",
-        stylers: [
-          { hue: main_color },
-          { visibility: "on" }, 
-          { lightness: brightness_value }, 
-          { saturation: saturation_value }
-        ]
-      },
-      {
-        featureType: "poi.sport_complex",
-        elementType: "geometry.fill",
-        stylers: [
-          { hue: main_color },
-          { visibility: "on" }, 
-          { lightness: brightness_value }, 
-          { saturation: saturation_value }
-        ]
-      },
-      {
-        featureType: "poi.attraction",
-        elementType: "geometry.fill",
-        stylers: [
-          { hue: main_color },
-          { visibility: "on" }, 
-          { lightness: brightness_value }, 
-          { saturation: saturation_value }
-        ]
-      },
-      {
-        featureType: "poi.business",
-        elementType: "geometry.fill",
-        stylers: [
-          { hue: main_color },
-          { visibility: "on" }, 
-          { lightness: brightness_value }, 
-          { saturation: saturation_value }
-        ]
-      },
-      {
-        featureType: "transit",
-        elementType: "geometry.fill",
-        stylers: [
-          { hue: main_color },
-          { visibility: "on" }, 
-          { lightness: brightness_value }, 
-          { saturation: saturation_value }
-        ]
-      },
-      {
-        featureType: "transit.station",
-        elementType: "geometry.fill",
-        stylers: [
-          { hue: main_color },
-          { visibility: "on" }, 
-          { lightness: brightness_value }, 
-          { saturation: saturation_value }
-        ]
-      },
-      {
-        featureType: "landscape",
-        stylers: [
-          { hue: main_color },
-          { visibility: "on" }, 
-          { lightness: brightness_value }, 
-          { saturation: saturation_value }
-        ]
-        
-      },
-      {
-        featureType: "road",
-        elementType: "geometry.fill",
-        stylers: [
-          { hue: main_color },
-          { visibility: "on" }, 
-          { lightness: brightness_value }, 
-          { saturation: saturation_value }
-        ]
-      },
-      {
-        featureType: "road.highway",
-        elementType: "geometry.fill",
-        stylers: [
-          { hue: main_color },
-          { visibility: "on" }, 
-          { lightness: brightness_value }, 
-          { saturation: saturation_value }
-        ]
-      }, 
-      {
-        featureType: "water",
-        elementType: "geometry",
-        stylers: [
-          { hue: main_color },
-          { visibility: "on" }, 
-          { lightness: brightness_value }, 
-          { saturation: saturation_value }
-        ]
-      }
-    ];
-      
-    directionsDisplay = new google.maps.DirectionsRenderer();
-    
-    //set google map options
-    var map_options = {
-          center: new google.maps.LatLng(latitude, longitude),
-          zoom: map_zoom,
-          panControl: false,
-          zoomControl: false,
-          mapTypeControl: false,
-          streetViewControl: false,
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          scrollwheel: false,
-          styles: style,
-      }
-      //inizialize the map
-    var map = new google.maps.Map(document.getElementById('google-container'), map_options);
-    //add a custom marker to the map        
-    var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(latitude, longitude),
-        map: map,
-        visible: true,
-      icon: marker_url,
-    });
+    var hotelMap = L.map('hotelsMap').setView([hi_lat, hi_lon], 14)
 
-    var directionsLink = 'https://www.google.com/maps/dir//95+Liberty+St,+Columbus,+OH+43215/@39.95109,-83.0013082,17z/data=!4m13!1m4!3m3!1s0x88388f48e6434935:0xff30eef6acf4b7f8!2s95+Liberty+St!3b1!4m7!1m0!1m5!1m1!1s0x88388f48e6434935:0xff30eef6acf4b7f8!2m2!1d-83.0013082!2d39.95109'
-    var infoContent = '<h4>Vue</h4>' +
-      '<p>95 Liberty Street<br>' +
-      'Columbus, OH 43215</p>' +
-      '<a href="' + directionsLink + '" target="_blank">Directions</a>'
+    var Acetate_all = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+      attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+      subdomains: '0123',
+      minZoom: 2,
+      maxZoom: 18
+    }).addTo(venueMap);
 
-    var infowindow = new google.maps.InfoWindow({
-      content: infoContent
-    });
+    var Acetate_all = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+      attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+      subdomains: '0123',
+      minZoom: 2,
+      maxZoom: 18
+    }).addTo(hotelMap);
 
-    google.maps.event.addListener(marker, 'click', function() {
-      infowindow.open(map, marker)
-    });
-
-    //add custom buttons for the zoom-in/zoom-out on the map
-    function CustomZoomControl(controlDiv, map) {
-      //grap the zoom elements from the DOM and insert them in the map 
-        var controlUIzoomIn= document.getElementById('cd-zoom-in'),
-        controlUIzoomOut= document.getElementById('cd-zoom-out');
-        controlDiv.appendChild(controlUIzoomIn);
-        controlDiv.appendChild(controlUIzoomOut);
-
-      // Setup the click event listeners and zoom-in or out according to the clicked element
-      google.maps.event.addDomListener(controlUIzoomIn, 'click', function() {
-          map.setZoom(map.getZoom()+1)
-      });
-      google.maps.event.addDomListener(controlUIzoomOut, 'click', function() {
-          map.setZoom(map.getZoom()-1)
-      });
+    var venueIcon = {
+      icon: 'heart',
+      prefix: 'fa',
+      markerColor: 'red',
+      iconColor: '#fff'
     }
 
-    var zoomControlDiv = document.createElement('div');
-    var zoomControl = new CustomZoomControl(zoomControlDiv, map);
-
-      //insert the zoom div on the top left of the map
-      map.controls[google.maps.ControlPosition.LEFT_TOP].push(zoomControlDiv);
+    var hotelIcon = {
+      icon: 'building',
+      prefix: 'fa',
+      markerColor: 'blue',
+      iconColor: '#fff' 
     }
+
+    var venueMarker = L.marker([latitude, longitude], {icon: L.AwesomeMarkers.icon(venueIcon)}).addTo(venueMap);
+    var venueMarker2 = L.marker([latitude, longitude], {icon: L.AwesomeMarkers.icon(venueIcon)}).addTo(hotelMap);
+    var hiMarker = L.marker([hi_lat, hi_lon], {icon: L.AwesomeMarkers.icon(hotelIcon)}).addTo(hotelMap);
+    var cyMarker = L.marker([cy_lat, cy_lon], {icon: L.AwesomeMarkers.icon(hotelIcon)}).addTo(hotelMap);
+
+    venueMarker.bindPopup("<strong>Vue</strong><br>95 Liberty Street<br>Columbus, Ohio 43215").openPopup();
+    hiMarker.bindPopup("<strong>Holiday Inn</strong><br>175 East Town Street<br>Columbus, Ohio 43215").openPopup();
+    cyMarker.bindPopup("<strong>Courtyard</strong><br>35 West Spring Street<br>Columbus, Ohio 43215").openPopup();
   }
+}

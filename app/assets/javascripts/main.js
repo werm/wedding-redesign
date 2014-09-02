@@ -74,10 +74,8 @@ _.templateSettings = {
         });
     },
 
-    loadDetails: function(){
-      if($('#details').isOnScreen() && mapsLoaded !== true){
-        Map.load()
-      }
+    initMaps: function(){
+      Map.load()
     },
 
     loadMail: function(){
@@ -195,12 +193,8 @@ $(window).load(function(){
   $('#content').css({
     'opacity': '100'
   });
-  App.loadDetails();
   $('.loading').hide();
-});
-
-$(window).on('scroll', function(){
-  App.loadDetails();
+  App.initMaps()
 });
 
 var oldSrc;
@@ -213,6 +207,11 @@ $(function(){
   })
   .mouseout(function() {
      $(this).attr("src", oldSrc);
+  });
+
+  $('#venue-map').onImpression({
+    offset: -5,
+    callback: App.initMaps
   });
 });
 

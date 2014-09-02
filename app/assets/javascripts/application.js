@@ -19,10 +19,13 @@
 //= require images_loaded
 //= require smoothscroll
 //= require jquery.stellar.min
+//= require onimpression
 //= require classie
 //= require bootsy
 //= require underscore
 //= require fittext
+//= require providers.leaflet
+//= require awesomeMarkers.leaflet
 //= require maps
 //= require sessions
 //= require bootstrap-sprockets
