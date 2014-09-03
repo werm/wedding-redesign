@@ -34,6 +34,9 @@
 #venueMap, #hotelsMap {
   position: relative;
 }
+
+#hotelsMap { margin-bottom: 20px; }
+
 #map address {
   position: absolute;
   width: 100%;
